@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+
+<div class="jumbotron centered">
+  <div class="container">
+    <h1 class="display-3">Driver Events </h1>
+    <hr>
+    <table style="width:60%">
+      <tr>
+        <th>sr. No</th>
+        <th>Event Driver ID</th>
+        <th>Event Name</th>
+        <th>Driver Name</th>
+        <th>Action</th>
+      </tr>
+      
+        <% var i=1; %>
+        <% eventDeiverObj.forEach(function(obj){    %>
+          <tr></tr>
+          <td><%=i%></td>
+          <td><%=obj.EventDriverId%></td>
+          <td><%=obj.EventCollection.EventName%></td>
+          <td><%=obj.DriverCollection.DriverName%></td>
+          <td><a href="/editevent?id=<%=obj.EventDriverId%>">edit </a>
+            /<a href="/deleteevent?id=<%=obj.EventDriverId%>">Delete</a></td>
+          <%i++ %>
+        <%  }); %>
+       
+      
+      <tr>
+        <a href="/addeventdriver">Add Driver Event</a>
+      </tr>
+      
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

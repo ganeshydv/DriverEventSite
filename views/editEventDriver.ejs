@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<h1>Edit Event </h1>
+<div class="jumbotron centered">
+    <div class="container">
+      <h1 class="display-3"><%=eventDriverObj.EventCollection.EventName%> </h1>
+      <hr>
+      <form action="/editevent?eventdriverId=<%=eventDriverObj.EventDriverId %>&ename= <%=eventDriverObj.EventCollection.EventName %>&dname=<%=eventDriverObj.DriverCollection.DriverName %>" method="post">
+        <label for="text">Event Name :</label>
+        <input type="text" placeholder="<%=eventDriverObj.EventCollection.EventName %>" name="eventName" >
+        <br>
+        <label for="text">Driver Name :</label>
+        <input type="text" placeholder="<%=eventDriverObj.DriverCollection.DriverName %>" name="driverName">
+        <br>
+        <label for="date">Created Date :</label>
+        <input type="datetime" readonly  placeholder="<%= (new Date()).toLocaleDateString(eventDriverObj.CreatedDate)  %>" >
+        <br>
+        <label for="text">Created By :</label>
+        <input type="text" readonly  placeholder="<%=eventDriverObj.CreatedBy %>"  >
+        <br>
+        <button type="submit" >Update</button>
+      </form>
+    </div>
+  </div>
+
+<%- include('partials/footer') %>
