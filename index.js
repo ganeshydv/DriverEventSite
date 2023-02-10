@@ -2,7 +2,6 @@ const express=require("express");
 const mongoose=require('mongoose');
 const ejs=require('ejs');
 const bodyParser=require('body-parser');
-// const { Router } = require("express");
 
 
 const app=express();
@@ -56,7 +55,16 @@ const userSchema=new mongoose.Schema({
     password:String
 });
 
+const eventSchema=new mongoose.Schema({
+    eventName:Array
+})
+
+const eventModel=mongoose.model("event",eventSchema);
+// let events=new eventModel({eventName:['break','over speed','start','door open','door closed']
+// });
+// events.save();
 //-----------------------------------------------------------------
+let eventsArray=[];
 
 //----------------- creating Model  i.e. collection in DB --------
 const EventDriverModel=mongoose.model('eventDriver',EventDriverSchema);
@@ -83,9 +91,10 @@ app.post('/login',(req,resp)=>{
                 resp.redirect('/')
             }else{
                 console.log(result);
-                if(req.body.password===result.password){
+                
+                if(result!=null && req.body.password===result.password){
                     console.log("user login successful....");
-                    // console.log(result.userName);
+                    console.log("user: "+result.userName);
                     user_name=result.userName;
                     resp.redirect('/eventdriver');
                 }else{
@@ -139,7 +148,8 @@ app.post('/signup',(req,resp)=>{
 
 
 app.get('/eventdriver',(req,resp)=>{
-    getDataSize().find();
+    getDataSize();
+    getEventList();
     const EventDriverModel2=mongoose.model('eventDriver',EventDriverSchema);
     EventDriverModel2.find({IsActive:1},(err,result)=>{
         if(err){
@@ -156,13 +166,17 @@ app.get('/eventdriver',(req,resp)=>{
 //------------- ADD EVENT ------------------------------
 
 app.get('/addeventdriver',(req,resp)=>{
-    
-    resp.render('addEventDriver');
+    getEventList();
+    getDataSize();
+    resp.render('addEventDriver',{eventsArray:eventsArray});
     
 });
 app.post('/addeventdriver',(req,resp)=>{
-    console.log("adding event .."+req.body.eventName)
-    console.log(totalCount);
+    console.log("adding event .."+req.body.eventName+" by user "+user_name);
+    console.log(req.body);
+    getDataSize();
+    // getEventList();
+    console.log("on add event page count: "+totalCount);
     if(req.body.eventName ==="" || req.body.driverName===""){
         resp.render('addEventDriver');
     }else{
@@ -208,12 +222,12 @@ app.post('/addeventdriver',(req,resp)=>{
 //---------------   EDIT  --------------
 app.get('/editevent',(req,resp)=>{
     console.log(req.query);
-
+    // getEventList();
     EventDriverModel.findOne({EventDriverId:req.query.id},(err,result)=>{
         // console.log(result);
 
         if(result!=null){
-            resp.render("editEventDriver",{eventDriverObj:result});
+            resp.render("editEventDriver",{eventDriverObj:result,eventsArray:eventsArray});
         }else{
             resp.redirect("/eventdriver");
         }
@@ -223,24 +237,64 @@ app.get('/editevent',(req,resp)=>{
 
 
 app.post('/editevent',(req,resp)=>{
-    console.log(req.query);
+    console.log("on edit event..by "+user_name);
+    console.log('query:');
+    console.log(req.query)
+    console.log("body: ");
     console.log(req.body);
     const EventDriverModel2=mongoose.model('eventDriver',EventDriverSchema);
-    EventDriverModel2.findOneAndUpdate({EventDriverId:req.query.eventdriverId},
+    if(req.body.eventName===''){
+        EventDriverModel2.findOneAndUpdate({EventDriverId:req.query.eventdriverId},
+            {$set:{
+             'DriverCollection.DriverName':req.body.driverName,
+             'ModifiedBy':user_name
+            }},(err,result)=>{
+             
+             if(err || result===null){
+                 console.log(err+"\n Not found");
+                 resp.redirect("/eventdriver");
+             }else{
+                 console.log("udated document...");
+                 resp.redirect('/eventdriver');
+             }
+     
+         })
+    }else if(req.body.driverName===''){
+        EventDriverModel2.findOneAndUpdate({EventDriverId:req.query.eventdriverId},
+            {$set:{
+             'EventCollection.EventName':req.body.eventName,
+             'ModifiedBy':user_name
+            }},(err,result)=>{
+             
+             if(err || result===null){
+                 console.log(err+"\n Not found");
+                 resp.redirect("/eventdriver");
+             }else{
+                 console.log("udated document...");
+                 resp.redirect('/eventdriver');
+             }
+         })
+         
+    }else{
+        EventDriverModel2.findOneAndUpdate({EventDriverId:req.query.eventdriverId},
        {$set:{
         'EventCollection.EventName':req.body.eventName,
-        'DriverCollection.DriverName':req.body.driverName
+        'DriverCollection.DriverName':req.body.driverName,
+        'ModifiedBy':user_name
        }},(err,result)=>{
         
         if(err || result===null){
             console.log(err+"\n Not found");
             resp.redirect("/eventdriver");
         }else{
-            console.log("udated document...");
+            console.log("udated both document...");
             resp.redirect('/eventdriver');
         }
 
     })
+    }
+   
+    
 })
 
 
@@ -272,15 +326,26 @@ app.listen(3000,()=>{
 //-------------------
 function getDataSize(){
     var x=0;
-    return mongoose.model('eventDriver',EventDriverSchema).find((err,result,x)=>{
+    mongoose.model('eventDriver',EventDriverSchema).find((err,result,x)=>{
         if(err){
             console.log(err);
-            // return 0;
         }else{
             console.log("size: "+result.length);
             totalCount=result.length;
-            // return result.length;
         }
     })
-    // return x;
+}
+
+//------ get list of events -----------
+
+function getEventList(){
+    eventModel.find((err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            // console.log(result);
+        }
+        eventsArray=result[0].eventName;
+        // console.log(eventsArray);
+    })
 }
