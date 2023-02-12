@@ -221,8 +221,10 @@ app.post('/addeventdriver',(req,resp)=>{
 
 //---------------   EDIT  --------------
 app.get('/editevent',(req,resp)=>{
+    
     console.log(req.query);
-    // getEventList();
+    getEventList();
+    getDataSize();
     EventDriverModel.findOne({EventDriverId:req.query.id},(err,result)=>{
         // console.log(result);
 

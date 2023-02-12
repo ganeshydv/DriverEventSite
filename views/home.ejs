@@ -11,7 +11,8 @@
         <th>Event Driver ID</th>
         <th>Event Name</th>
         <th>Driver Name</th>
-        <th>Action</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
       
         <% var i=1; %>
@@ -21,14 +22,20 @@
           <td><%=obj.EventDriverId%></td>
           <td><%=obj.EventCollection.EventName%></td>
           <td><%=obj.DriverCollection.DriverName%></td>
-          <td><a href="/editevent?id=<%=obj.EventDriverId%>">edit </a>
-            /<a href="/deleteevent?id=<%=obj.EventDriverId%>">Delete</a></td>
+          <td><button class="btn btn-success" ><a style="color: aliceblue;" href="/editevent?id=<%=obj.EventDriverId%>">edit </a></button></td>
+          <td><button class="btn btn-warning"><a style="color: black;" href="/deleteevent?id=<%=obj.EventDriverId%>">Delete</a></button></td>
           <%i++ %>
         <%  }); %>
        
+      <tr><td><br><br></td></tr>
       
-      <tr>
-        <a href="/addeventdriver">Add Driver Event</a>
+      <tr >
+        <td colspan="6" style="text-align: center;margin-top: 20px;">
+          <button class="btn btn-success">
+          <a style="color: aliceblue" href="/addeventdriver">Add Driver Event</a>
+        </button>
+        </td>
+          
       </tr>
       
     </table>
