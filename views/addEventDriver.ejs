@@ -1,42 +1,51 @@
 <%- include('partials/header') %>
 
 <div class="jumbotron centered">
-    <div class="container" style="text-align: center;">
-      <h1 class="display-3">Add Event Driver </h1>
-      <hr>
-      <form action="/addeventdriver" method="post" style="text-align: center;
-      display: flex;
-      justify-content: center;">
-        <table>
-            <tr>
-                <td>
-                    <label for="text">Event Name</label>
-                </td>
-                <td  style="text-align: left;">
-                     <select name="eventName">
-                        <% eventsArray.forEach(function(obj){    %>
-                         <option value="<%=obj%>" name="eventName" selected><%=obj%></option>
-                        <%  }); %> 
-                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="text">Driver Name</label>
-                </td>
-                <td>
-                     <input type="text" name="driverName"> 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button type="submit" class="btn btn-warning">Add</button>
-                </td>
-            </tr>
-        </table>
-        
+  <div
+    class="container"
+    style="
+      text-align: center;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    "
+  >
+    <h1 class="display-3">Add Event Driver</h1>
+    <hr />
+    <form
+      action="/addeventdriver"
+      method="post"
+      style="text-align: center; display: flex; justify-content: center"
+    >
+      <table>
+        <tr>
+          <td>
+            <label for="text">Event Name</label>
+          </td>
+          <td style="text-align: left">
+            <select name="eventName">
+              <% eventsArray.forEach(function(obj){ %>
+              <option value="<%=obj%>" name="eventName" selected>
+                <%=obj%>
+              </option>
+              <% }); %>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="text">Driver Name</label>
+          </td>
+          <td>
+            <input type="text" name="driverName" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit" class="btn btn-success">Add</button>
+          </td>
+        </tr>
+      </table>
     </form>
-    </div>
   </div>
+</div>
 
 <%- include('partials/footer') %>

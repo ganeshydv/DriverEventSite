@@ -2,9 +2,9 @@
 
 
 <div class="jumbotron centered">
-  <div class="container">
-    <h1 class="display-3">Driver Events </h1>
-    <hr>
+  <h1 class="display-3" style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Driver Events </h1>
+  <div class="container" style="display: flex; justify-content: center;">
+
     <table style="width:60%">
       <tr>
         <th>Sr. No</th>
@@ -16,7 +16,7 @@
       </tr>
       
         <% var i=1; %>
-        <% eventDeiverObj.forEach(function(obj){    %>
+        <% eventDriverObj.forEach(function(obj){    %>
           <tr></tr>
           <td><%=i%></td>
           <td><%=obj.EventDriverId%></td>
@@ -28,7 +28,7 @@
           </td>
           <td>
             <a style="color: black;" href="/deleteevent?id=<%=obj.EventDriverId%>" >
-              <button class="btn btn-warning" id="deleteEvent1" onclick="alert('do you want to delete?')">Delete</button>
+              <button class="btn btn-warning" id="deleteEvent1" onclick="deleteEvent('<%=obj.EventCollection.EventName%>')">Delete</button>
             </a>
           </td>
           <%i++ %>
@@ -52,13 +52,8 @@
 </div>
 
 <script>
-document.getElementById('deleteEvent1').addEventListener('click',  function(){
-    console.log("delete alert..")
-      alert("do you want to delete this item ?");
-      // return;
-  });
-  function deleteEvent(){
-    alert("do you want to delete this item ?");
+  function deleteEvent(eName){
+    alert(`do you want to delete this { ${eName} } item ?`);
   }
 </script>
 
