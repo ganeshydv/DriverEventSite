@@ -1,17 +1,19 @@
 <%- include('partials/header') %>
 
 <div class="jumbotron centered">
-    <div class="container">
+    <div class="container" style="text-align: center;">
       <h1 class="display-3">Add Event Driver </h1>
       <hr>
-      <form action="/addeventdriver" method="post">
+      <form action="/addeventdriver" method="post" style="text-align: center;
+      display: flex;
+      justify-content: center;">
         <table>
             <tr>
                 <td>
                     <label for="text">Event Name</label>
                 </td>
-                <td>
-                     <select name="eventName" >
+                <td  style="text-align: left;">
+                     <select name="eventName">
                         <% eventsArray.forEach(function(obj){    %>
                          <option value="<%=obj%>" name="eventName" selected><%=obj%></option>
                         <%  }); %> 
@@ -26,8 +28,13 @@
                      <input type="text" name="driverName"> 
                 </td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-warning">Add</button>
+                </td>
+            </tr>
         </table>
-        <button type="submit">Add</button>
+        
     </form>
     </div>
   </div>

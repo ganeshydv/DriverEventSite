@@ -175,21 +175,22 @@ app.post('/addeventdriver',(req,resp)=>{
     console.log("adding event .."+req.body.eventName+" by user "+user_name);
     console.log(req.body);
     getDataSize();
-    // getEventList();
+    // 
     console.log("on add event page count: "+totalCount);
     if(req.body.eventName ==="" || req.body.driverName===""){
-        resp.render('addEventDriver');
+        getEventList();
+        resp.render('addEventDriver',{eventsArray:eventsArray});
     }else{
         totalCount++;
-        let newEventDriver=new EventDriverModel({
+        let newEventDriver=new mongoose.model('eventDriver',EventDriverSchema)({
             EventDriverId:""+totalCount,
             // EventId:String,
             // DriverId:String,
             IsActive:1,
             CreatedBy:user_name,
             ModifiedBy:user_name,
-            CreatedDate:(new Date()).toLocaleDateString('en-GB'),
-            ModifiedDate:(new Date()).toLocaleDateString('en-GB'),
+            CreatedDate:(new Date(getDate().toString())),
+            ModifiedDate:(new Date(getDate().toString())),
             EventCollection:{
                 EventId:"1",
                 EventName:req.body.eventName,
@@ -198,7 +199,7 @@ app.post('/addeventdriver',(req,resp)=>{
                 IsActive:1,
                 CreatedBy:"=",
                 ModifiedBy:"",
-                CreatedDate:(new Date()).toLocaleDateString('en-GB')
+                CreatedDate:(new Date("12-02-2023")).toLocaleDateString('en-GB')
             },
             DriverCollection:{
             
@@ -207,8 +208,8 @@ app.post('/addeventdriver',(req,resp)=>{
                 IsActive:1,
                 CreatedBy:"",
                 ModifiedBy:"",
-                CreatedDate:(new Date()).toLocaleDateString('en-GB'),
-                ModifiedDate:(new Date()).toLocaleDateString('en-GB')
+                CreatedDate:(new Date("12-02-2023")).toLocaleDateString('en-GB'),
+                ModifiedDate:(new Date("12-02-2023")).toLocaleDateString('en-GB')
             }
         });
     
@@ -325,10 +326,10 @@ app.listen(3000,()=>{
     console.log("server running on port 3000 ....");
 })
 
+
 //-------------------
 function getDataSize(){
-    var x=0;
-    mongoose.model('eventDriver',EventDriverSchema).find((err,result,x)=>{
+    mongoose.model('eventDriver',EventDriverSchema).find((err,result)=>{
         if(err){
             console.log(err);
         }else{
@@ -350,4 +351,14 @@ function getEventList(){
         eventsArray=result[0].eventName;
         // console.log(eventsArray);
     })
+}
+
+//-------------GEt Date in MM//DD/YYYY format
+function getDate(){
+    var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+  
+        var yyyy = today.getFullYear();
+        return mm+"-"+dd+"-"+yyyy;
 }

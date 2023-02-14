@@ -7,7 +7,7 @@
     <hr>
     <table style="width:60%">
       <tr>
-        <th>sr. No</th>
+        <th>Sr. No</th>
         <th>Event Driver ID</th>
         <th>Event Name</th>
         <th>Driver Name</th>
@@ -22,8 +22,15 @@
           <td><%=obj.EventDriverId%></td>
           <td><%=obj.EventCollection.EventName%></td>
           <td><%=obj.DriverCollection.DriverName%></td>
-          <td><button class="btn btn-success" ><a style="color: aliceblue;" href="/editevent?id=<%=obj.EventDriverId%>">edit </a></button></td>
-          <td><button class="btn btn-warning"><a style="color: black;" href="/deleteevent?id=<%=obj.EventDriverId%>">Delete</a></button></td>
+          <td>
+            <a style="color: aliceblue;" href="/editevent?id=<%=obj.EventDriverId%>"><button class="btn btn-success" >edit </button> 
+            </a>
+          </td>
+          <td>
+            <a style="color: black;" href="/deleteevent?id=<%=obj.EventDriverId%>" >
+              <button class="btn btn-warning" id="deleteEvent1" onclick="alert('do you want to delete?')">Delete</button>
+            </a>
+          </td>
           <%i++ %>
         <%  }); %>
        
@@ -31,9 +38,11 @@
       
       <tr >
         <td colspan="6" style="text-align: center;margin-top: 20px;">
+          <a style="color: aliceblue" href="/addeventdriver">
           <button class="btn btn-success">
-          <a style="color: aliceblue" href="/addeventdriver">Add Driver Event</a>
-        </button>
+          Add Driver Event</button>
+        </a>
+        
         </td>
           
       </tr>
@@ -41,5 +50,16 @@
     </table>
   </div>
 </div>
+
+<script>
+document.getElementById('deleteEvent1').addEventListener('click',  function(){
+    console.log("delete alert..")
+      alert("do you want to delete this item ?");
+      // return;
+  });
+  function deleteEvent(){
+    alert("do you want to delete this item ?");
+  }
+</script>
 
 <%- include('partials/footer') %>
