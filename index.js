@@ -6,14 +6,9 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))  //for accepting post data from frontend in array or string format
-app.set("view engine", 'ejs');
+app.set("view engine", 'ejs');                      // to render ejs template as HTML 
 app.use(express.static('public'));
-// let i=0;
-// app.use(()=>{
-//     i++;
-//     console.log("1st middleware call Number--> "+i);
 
-// })
 console.log((new Date()).toLocaleDateString());
 //--------------------
 mongoose.connect("mongodb://0.0.0.0:27017/EventDriverDB");
@@ -101,6 +96,7 @@ app.get('/signup', (req, resp) => {
 })
 
 app.post('/signup', (req, resp) => {
+    
     if (req.body.usermail === null || req.body.username === null || req.body.password === null) {
         resp.redirect("/signup");
     } else {
@@ -129,6 +125,10 @@ app.post('/signup', (req, resp) => {
 
 // ----------------HOME ---------------
 app.get('/eventdriver', (req, resp) => {
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     getDataSize();
     getEventList();
     const EventDriverModel2 = mongoose.model('eventDriver', EventDriverSchema);
@@ -147,17 +147,25 @@ app.get('/eventdriver', (req, resp) => {
 //------------- ADD EVENT ------------------------------
 
 app.get('/addeventdriver', (req, resp) => {
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     getEventList();
     getDataSize();
     resp.render('addEventDriver', { eventsArray: eventsArray });
 });
 app.post('/addeventdriver', (req, resp) => {
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     console.log("adding event .." + req.body.eventName + " by user " + user_name);
     console.log(req.body);
     console.log("on add event page count: " + totalCount);
     if (req.body.eventName === "" || req.body.driverName === "") {
         resp.render('addEventDriver', { eventsArray: eventsArray });
-    } else {
+    }else {
         totalCount++;
         let newEventDriver = new mongoose.model('eventDriver', EventDriverSchema)({
             EventDriverId: "" + totalCount,
@@ -194,7 +202,10 @@ app.post('/addeventdriver', (req, resp) => {
 
 //---------------   EDIT  --------------
 app.get('/editevent', (req, resp) => {
-
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     console.log(req.query);
     getEventList();
     getDataSize();
@@ -209,6 +220,10 @@ app.get('/editevent', (req, resp) => {
 });
 
 app.post('/editevent', (req, resp) => {
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     const EventDriverModel2 = mongoose.model('eventDriver', EventDriverSchema);
     if (req.body.eventName === '') {
         EventDriverModel2.findOneAndUpdate({ EventDriverId: req.query.eventdriverId },
@@ -267,6 +282,10 @@ app.post('/editevent', (req, resp) => {
 })
 //------------------- DELETE ------------
 app.get('/deleteevent', (req, resp) => {
+    if(user_name===""){
+        resp.redirect('/');
+        return;
+    }
     console.log(req.query);
     const EventDriverModel2 = mongoose.model('eventDriver', EventDriverSchema);
     EventDriverModel2.findOneAndUpdate({ EventDriverId: parseInt(req.query.id) },   // <<--- string to int
@@ -326,3 +345,4 @@ function getDate() {
     var yyyy = today.getFullYear();
     return mm + "-" + dd + "-" + yyyy;
 }
+
