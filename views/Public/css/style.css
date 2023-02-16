@@ -1,0 +1,86 @@
+body{
+    background-color: rgb(255, 255, 255);
+}
+/* Driver Event home  */
+.eventDriverTable{
+    border: 2px solid black;
+}
+
+#driverEventHead{
+    text-align: center; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: xx-large;
+}
+
+#dvTableparentdiv{
+    display: flex; justify-content: center;
+}
+
+#addEventBtn{
+    text-align: center;margin-top: 20px;
+}
+
+/*      sign up css */
+#signUpSignInMainDiv{
+    display: flex;
+      justify-content: center;
+      flex-direction: column;
+      background-color: rgb(83, 151, 241);
+      padding-top: 21px;
+      margin-top: 20px;
+}
+
+/*   edit Event  */
+#editForm{
+    text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+}
+
+/*   add from */
+/*  NavBar */
+#navbarNav{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    
+}
+#iconMainDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#icon{
+    justify-content: center;
+}
+#eDrive{
+    color: black; font-size: 20px; font-weight: bold;
+}
+
+#event{
+    color: rgb(255, 0, 0);
+}
+
+/* transition */
+#logoTransition {
+    /* background: orange;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px; */
+    animation: moveToRight 2s ease-in infinite;
+    animation-delay: 3000ms;
+}
+@keyframes moveToRight {
+    from {
+      transform: translateX(-400px);
+    }
+    to{
+        transform: translateX(450px);
+    }
+}

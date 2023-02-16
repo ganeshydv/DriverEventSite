@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const path=require('path')
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))  //for accepting post data from frontend in array or string format
 app.set("view engine", 'ejs');                      // to render ejs template as HTML 
-app.use(express.static('public'));
+app.use(express.static('views'));            // -->to use static files present in 'views' folder
 
 console.log((new Date()).toLocaleDateString());
 //--------------------
@@ -63,12 +64,17 @@ let totalCount = 0;
 let user_name = "";
 //----------------------- Home   -----------------------------------
 app.get('/', function (req, resp) {
-    resp.render("login");
+    if(user_name===""){
+        resp.render("login",{userName_1:user_name});
+    }else{
+        resp.redirect('/eventdriver');
+    }
+    
 })
 // ------------------- LOGIN -------------------------
 app.post('/login', (req, resp) => {
     if (req.body.email === null) {
-        resp.render("login");
+        resp.render("login",{userName_1:user_name});
     } else {
         userModel.findOne({ email: req.body.usermail }, (err, result) => {
             if (err) {
@@ -90,9 +96,15 @@ app.post('/login', (req, resp) => {
         })
     }
 })
+//--------------------- Log Out ---------
+app.get('/logout',(req,resp)=>{
+    user_name="";
+    resp.redirect("/eventdriver")
+}
+)
 //------------------ SIGNUP ----------------------------
 app.get('/signup', (req, resp) => {
-    resp.render('signup');
+    resp.render('signup',{userName_1:user_name});
 })
 
 app.post('/signup', (req, resp) => {
@@ -115,7 +127,8 @@ app.post('/signup', (req, resp) => {
                     user_name = req.body.username;
                     resp.redirect('/eventdriver');
                 } else {
-                    console.log("user already exists....")
+                    console.log("user already exists....");
+
                     resp.redirect('/');
                 }
             }
@@ -139,7 +152,7 @@ app.get('/eventdriver', (req, resp) => {
             console.log(result.length);
             console.log("on event page: " + totalCount);
             // console.log(result);
-            resp.render("home", { eventDriverObj: result });
+            resp.render("home", { eventDriverObj: result ,userName_1:user_name});
         }
     })
 });
@@ -153,7 +166,7 @@ app.get('/addeventdriver', (req, resp) => {
     }
     getEventList();
     getDataSize();
-    resp.render('addEventDriver', { eventsArray: eventsArray });
+    resp.render('addEventDriver', { eventsArray: eventsArray ,userName_1:user_name});
 });
 app.post('/addeventdriver', (req, resp) => {
     if(user_name===""){
@@ -164,7 +177,7 @@ app.post('/addeventdriver', (req, resp) => {
     console.log(req.body);
     console.log("on add event page count: " + totalCount);
     if (req.body.eventName === "" || req.body.driverName === "") {
-        resp.render('addEventDriver', { eventsArray: eventsArray });
+        resp.render('addEventDriver', { eventsArray: eventsArray,userName_1:user_name });
     }else {
         totalCount++;
         let newEventDriver = new mongoose.model('eventDriver', EventDriverSchema)({
@@ -211,7 +224,7 @@ app.get('/editevent', (req, resp) => {
     getDataSize();
     EventDriverModel.findOne({ EventDriverId: req.query.id }, (err, result) => {
         if (result != null) {
-            resp.render("editEventDriver", { eventDriverObj: result, eventsArray: eventsArray });
+            resp.render("editEventDriver", { eventDriverObj: result, eventsArray: eventsArray,userName_1:user_name });
         } else {
             resp.redirect("/eventdriver");
         }
@@ -254,7 +267,7 @@ app.post('/editevent', (req, resp) => {
 
                 if (err || result === null) {
                     console.log(err + "\n Not found");
-                    resp.redirect("/eventdriver");
+                    resp.redirect('/eventdriver');
                 } else {
                     console.log("udated document...");
                     resp.redirect('/eventdriver');
@@ -272,7 +285,7 @@ app.post('/editevent', (req, resp) => {
 
                 if (err || result === null) {
                     console.log(err + "\n Not found");
-                    resp.redirect("/eventdriver");
+                    resp.redirect('/eventdriver');
                 } else {
                     console.log("udated both document...");
                     resp.redirect('/eventdriver');
@@ -296,7 +309,7 @@ app.get('/deleteevent', (req, resp) => {
         }, (err, result) => {
             if (err || result === null) {
                 console.log(err + "\n Not found");
-                resp.redirect("/eventdriver");
+                resp.redirect('/eventdriver');
             } else {
                 console.log("partial delete document...");
                 resp.redirect('/eventdriver');

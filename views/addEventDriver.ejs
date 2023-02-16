@@ -1,20 +1,10 @@
 <%- include('partials/header') %>
 
 <div class="jumbotron centered">
-  <div
-    class="container"
-    style="
-      text-align: center;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    "
-  >
-    <h1 class="display-3">Add Event Driver</h1>
+  <div class="container driverEventHead">
+    <h1 class="display-3 " id="driverEventHead">Add Event Driver</h1>
     <hr />
-    <form
-      action="/addeventdriver"
-      method="post"
-      style="text-align: center; display: flex; justify-content: center"
-    >
+    <form action="/addeventdriver" method="post" id="editForm">
       <table>
         <tr>
           <td>

@@ -2,48 +2,78 @@
 
 <!-- <h1>Edit Event </h1> -->
 <div class="jumbotron centered">
-    <div class="container" style="text-align: center;">
-      <h1 class="display-3" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Edit Event: <%=eventDriverObj.EventCollection.EventName%> </h1>
-      <hr>
-      <form action="/editevent?eventdriverId=<%=eventDriverObj.EventDriverId %>&ename= <%=eventDriverObj.EventCollection.EventName %>&dname=<%=eventDriverObj.DriverCollection.DriverName %>" method="post" style="text-align: center;
-        display: flex;
-        justify-content: center;">
-        <table>
-          <tr>
-            <td> 
-              <label for="text">Event Name :</label>
-            </td>
-            <td style="text-align: left;;">
-              <select name="eventName" class="form-select">
-          <%   eventsArray.forEach(function(obj){   %>
-            <option value="<%=obj%>"><%=obj%></option>
-          <%});%>
-        </select>
-            </td>
-          </tr>
-          <tr>
-            <td><label for="text">Driver Name :</label></td>
-            <td> 
-              <input type="text" placeholder="<%=eventDriverObj.DriverCollection.DriverName %>" name="driverName"></td>
-          </tr>
-          <tr>
-            <td><label for="date">Created Date :</label></td>
-            <td><input type="datetime" readonly  placeholder="<%= (new Date(eventDriverObj.CreatedDate)).toLocaleDateString()  %>" ></td>
-          </tr>
-          <tr>
-            <td><label for="text">Created By :</label></td>
-            <td><input type="text" readonly  placeholder="<%=eventDriverObj.CreatedBy %>"  >
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" style="text-align: center;margin-top: 20px;"> <button class="btn btn-success" type="submit" >Update</button></td>
-          </tr>
-        </table>
-        
-        <!-- <input type="text" placeholder="<%=eventDriverObj.EventCollection.EventName %>" name="eventName" > -->
-       
-      </form>
-    </div>
+  <div class="container" style="text-align: center">
+    <h3 class="display-3" id="driverEventHead">
+      Edit Event
+      <span id="event"><%=eventDriverObj.EventCollection.EventName%></span>
+      <% if(eventDriverObj.EventCollection.EventName==="Overtake"){ %>
+        <img src="https://img.icons8.com/external-others-phat-plus/64/null/external-car-self-driving-car-outline-others-phat-plus-2.png"/>
+      <%}%> 
+    </h3>
+    <hr />
+    <form
+      action="/editevent?eventdriverId=<%=eventDriverObj.EventDriverId %>"
+      method="post"
+      id="editForm"
+    >
+      <table>
+        <tr>
+          <td>
+            <label for="text">Event Name </label>
+          </td>
+          <td style="text-align: left">
+            <select name="eventName" class="form-select">
+              <% eventsArray.forEach(function(obj){ %>
+                <% if(obj==="Overtake"){ %>
+                  <img src="https://img.icons8.com/external-others-phat-plus/64/null/external-car-self-driving-car-outline-others-phat-plus-2.png"/>
+                <%}%>
+              <option value="<%=obj%>"><%=obj%></option>
+              <%});%>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="text">Driver Name </label></td>
+          <td id="event">
+            <input
+              type="text"
+              placeholder="<%=eventDriverObj.DriverCollection.DriverName %>"
+              name="driverName"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="date">Created Date </label></td>
+          <td>
+            <input
+              type="datetime"
+              readonly
+              placeholder="<%= (new Date(eventDriverObj.CreatedDate)).toLocaleDateString()  %>"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="text">Created By :</label></td>
+          <td>
+            <input
+              type="text"
+              readonly
+              placeholder="<%=eventDriverObj.CreatedBy%>"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; margin-top: 20px">
+            <button class="btn btn-success" type="submit">Update</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- <input type="text" placeholder="<%=eventDriverObj.EventCollection.EventName %>" name="eventName" > -->
+    </form>
   </div>
+</div>
+
+
 
 <%- include('partials/footer') %>
