@@ -5,7 +5,7 @@
   <div class="container" style="text-align: center">
     <h3 class="display-3" id="driverEventHead">
       Edit Event
-      <span id="event"><%=eventDriverObj.EventCollection.EventName%></span>
+      <span id="event"><%=eventDriverObj.EventCollection.EventName.toUpperCase()%></span>
       <% if(eventDriverObj.EventCollection.EventName==="Overtake"){ %>
         <img src="https://img.icons8.com/external-others-phat-plus/64/null/external-car-self-driving-car-outline-others-phat-plus-2.png"/>
       <%}%> 
@@ -34,12 +34,14 @@
         </tr>
         <tr>
           <td><label for="text">Driver Name </label></td>
-          <td id="event">
-            <input
-              type="text"
-              placeholder="<%=eventDriverObj.DriverCollection.DriverName %>"
-              name="driverName"
-            />
+          <td id="event" style="text-align: left">
+            <select name="driverName" class="form-select">
+              <% DriverArray.forEach(function(obj){ %>
+              <option value="<%=obj%>" name="driverName" selected>
+                <%=obj%>
+              </option>
+              <% }); %>
+            </select>
           </td>
         </tr>
         <tr>

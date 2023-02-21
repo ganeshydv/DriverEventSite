@@ -17,11 +17,11 @@
       <div id="iconMainDiv">
         <div>
         <a class="navbar-brand" href="#" id="eDrive">
-          <img src="https://img.icons8.com/color/48/null/f1-race-car-side-view.png" id="logoTransition"/>
           <img
             src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-driving-vacation-planning-road-trip-flaticons-flat-flat-icons.png"
           />
           eDriving
+          <img src="https://img.icons8.com/color/48/null/f1-race-car-side-view.png" id="logoTransition"/>
         </a>
       </div>
       </div>
@@ -36,7 +36,7 @@
             height="60"
             width="50"
           />
-          <a class="navbar-brand" href="#"> Driver Events</a>
+          <a class="navbar-brand" href="#" style="color: black;"> Driver Events</a>
           <a class="nav-link" href="/">Home </a>
           <%if(userName_1===""){%>
           <a class="nav-link" href="/">Login </a>
@@ -50,7 +50,7 @@
             src="https://img.icons8.com/offices/30/null/gender-neutral-user.png"
           /> -->
         <img src="https://img.icons8.com/fluency/48/null/driver.png" />
-        <a class="nav-link">'<%=userName_1%>'</a>
+        <a class="nav-link">'<%=userName_1.toUpperCase()%>'</a>
         <a class="nav-link" href="/logout">LogOut </a>
       </div>
       <%}%>

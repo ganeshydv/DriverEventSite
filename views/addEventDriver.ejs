@@ -24,8 +24,14 @@
           <td>
             <label for="text">Driver Name</label>
           </td>
-          <td>
-            <input type="text" name="driverName" />
+          <td style="text-align: left">
+            <select name="driverName">
+                <% DriverArray.forEach(function(obj){ %>
+                <option value="<%=obj%>" name="driverName" selected>
+                  <%=obj%>
+                </option>
+                <% }); %>
+              </select>
           </td>
         </tr>
         <tr>
