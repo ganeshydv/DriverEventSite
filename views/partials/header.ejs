@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="utf-8">
-  <title>DriverEvents</title>
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <title>DriverEvents</title>
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"> -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../Public/css/style.css" />
+  </head>
+  <body>
+    <div id="iconMainDiv">
+      <div id="iconMainDiv">
+        <div>
+        <a class="navbar-brand" href="#" id="eDrive">
+          <img
+            src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-driving-vacation-planning-road-trip-flaticons-flat-flat-icons.png"
+          />
+          eDriving
+          <img src="https://img.icons8.com/color/48/null/f1-race-car-side-view.png" id="logoTransition"/>
+        </a>
+      </div>
+      </div>
+    </div>
+    <!--  NAV bar -->
+    <nav class="navbar bg-light nav-pills" id="iconMainDiv">
+      <div class="navbar-brand" id="navbarNav">
+        <div id="navbarNav">
+          <img
+            class="navbar-brand"
+            src="https://img.icons8.com/external-inipagistudio-mixed-inipagistudio/64/null/external-safety-driving-safe-driving-inipagistudio-mixed-inipagistudio.png"
+            height="60"
+            width="50"
+          />
+          <a class="navbar-brand" href="#" style="color: black;"> Driver Events</a>
+          <a class="nav-link" href="/">Home </a>
+          <%if(userName_1===""){%>
+          <a class="nav-link" href="/">Login </a>
+          <a class="nav-link" href="/signup">Sign Up </a>
+        </div>
+        <%}else{%>
+        <a class="nav-link" href="/addeventdriver"> Add Driver Event </a>
+      </div>
+      <div class="" id="navbarNav">
+        <!-- <img
+            src="https://img.icons8.com/offices/30/null/gender-neutral-user.png"
+          /> -->
+        <img src="https://img.icons8.com/fluency/48/null/driver.png" />
+        <a class="nav-link">'<%=userName_1.toUpperCase()%>'</a>
+        <a class="nav-link" href="/logout">LogOut </a>
+      </div>
+      <%}%>
+      <!-- </div> -->
+    </nav>
+  </body>
+</html>
